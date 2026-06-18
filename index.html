@@ -95,7 +95,7 @@ button:active{transform:translateY(0) scale(.98)}
 
 /* ---------- grand cake build stage ---------- */
 #cake-stage{
-  display:none;position:fixed;left:50%;bottom:5%;transform:translateX(-50%);
+  display:none;position:fixed;left:50%;bottom:8%;transform:translateX(-50%);
   width:min(95vw,620px);z-index:3;
   display: flex;
   flex-direction: column;
@@ -165,18 +165,22 @@ button:active{transform:translateY(0) scale(.98)}
 
 /* ---------- final caption with cosmic glowing sync ---------- */
 .final{
-  display:none;margin-top:26px;font-size:clamp(1.5rem,6vw,2.4rem);
+  opacity:0;margin-bottom:20px;font-size:clamp(1.4rem,5.5vw,2.2rem);
   background:linear-gradient(135deg,#ffe9a8,#ffd166,#ff9ecb);
   -webkit-background-clip:text;background-clip:text;color:transparent;
   font-weight:700;text-align:center;
-  animation: textTwinkle 3.5s ease-in-out infinite;
+  animation: textFadeIn 1.2s ease-out forwards, textTwinkle 3.5s ease-in-out infinite 1.2s;
+}
+@keyframes textFadeIn {
+  from { opacity: 0; transform: translateY(-15px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 @keyframes textTwinkle {
   0%, 100% { filter:drop-shadow(0 0 12px rgba(255,209,102,.35)); opacity: 0.9; }
-  50% { filter:drop-shadow(0 0 30px rgba(255,209,102,0.75)); opacity: 1; transform: scale(1.01); }
+  50% { filter:drop-shadow(0 0 25px rgba(255,209,102,0.7)); opacity: 1; }
 }
 .final .sub{
-  display:block;font-size:.42em;margin-top:14px;color:#f3e8ffcc;
+  display:block;font-size:.45em;margin-top:10px;color:#f3e8ffcc;
   -webkit-text-fill-color:#f3e8ffcc;font-style:italic;font-weight:400;
 }
 
@@ -378,8 +382,12 @@ function bump(elId){
 function showFinal(){
   let f=document.createElement('div');
   f.className='final';
-  f.style.display='block';
   f.innerHTML='Happy Birthday Pari ❤️<span class="sub">May all your dreams come true ✨<br>— Your Coder Brother 💻</span>';
-  document.getElementById('scene').appendChild(f);
+  
+  // Prepends the text element right inside the cake stage container, placing it perfectly above the candles
+  let stage = document.getElementById('cake-stage');
+  if(stage) {
+    stage.insertBefore(f, stage.firstChild);
+  }
 }
 </script></body></html>
